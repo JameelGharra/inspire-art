@@ -1,9 +1,17 @@
 "use client"
 
+import fetchSuggestion from '@/lib/fetchSuggestionFromChatGPT'
 import React, { useState } from 'react'
+import useSWR from 'swr'
 
 export default function PromptInput() {
     const [input, setInput] = useState("")
+    // validating for refreshing the cache, mutating if we want to call manually.
+    const {data: suggestion, isLoading, mutate, isValidating} = useSWR(
+        '/api/suggestion', 
+        fetchSuggestion,
+        {revalidateOnFocus: false},
+    )
     return (
         <div className='m-10'>
             <form className='flex flex-col lg:flex-row shadow-md
