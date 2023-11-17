@@ -1,5 +1,6 @@
 "use client"
 
+import fetchImages from '@/lib/fetchImages'
 import fetchSuggestion from '@/lib/fetchSuggestionFromChatGPT'
 import React, { FormEvent, useState } from 'react'
 import useSWR from 'swr'
@@ -12,6 +13,10 @@ export default function PromptInput() {
         fetchSuggestion,
         {revalidateOnFocus: false},
     )
+    // to update the images view if a new image was added by the user
+    const { mutate: updateImages } = useSWR("images", fetchImages, {
+        revalidateOnFocus: false,
+    })
     const loading = isLoading || isValidating
     const submitPrompt = async (useSuggestion?: boolean) => {
         const inputPrompt = input
@@ -27,7 +32,8 @@ export default function PromptInput() {
             }
         )
         const data = await response.json()
-
+        // making the user see the newly added image
+        updateImages()
     }
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

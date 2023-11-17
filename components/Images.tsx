@@ -14,13 +14,31 @@ function Images() {
     const {
         data: images,
         isLoading,
+        mutate: refreshImages,
         isValidating,
-    } = useSWR("/api/getimages", fetchImages, { // the first param is a key
+    } = useSWR("images", fetchImages, { // the first param is a key
         revalidateOnFocus: false,
     })
     console.log(images?.imageUrls)
     return (
         <div>
+                <button 
+                    onClick={() => refreshImages(images)}
+                    className='fixed bottom-10 right-10 bg-violet-400/90 
+                    text-white px-5 py-3 rounded-md hover:bg-violet-500 
+                    focus:outline-none focus:ring-2 focus:ring-violet-400 
+                    font-bold z-20'
+                >
+                    {!isLoading && isValidating ? 
+                    "Refreshing.." : "Refresh Images"}
+                </button>
+                {isLoading && (
+                <p className="animate-pulse text-center pb-7 font-extralight">
+                Loading previously <span className="text-violet-400">AI</span> generated
+                images..
+                </p>
+            )}
+
             <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
             xl:grid-cols-4 2xl:grid-cols-5 px-0 md:px-10'>
                 {images?.imageUrls?.map((image: ImageType, i:number) => (
