@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const req = await request.json()
     const prompt = req.prompt
     const response = await fetch(
-        '/api/generateimage',
+        'http://localhost:7071/api/generateImage',
         {
             method: 'POST',
             headers: {

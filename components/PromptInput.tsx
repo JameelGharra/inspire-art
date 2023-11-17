@@ -1,7 +1,7 @@
 "use client"
 
 import fetchSuggestion from '@/lib/fetchSuggestionFromChatGPT'
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import useSWR from 'swr'
 
 export default function PromptInput() {
@@ -13,10 +13,33 @@ export default function PromptInput() {
         {revalidateOnFocus: false},
     )
     const loading = isLoading || isValidating
+    const submitPrompt = async (useSuggestion?: boolean) => {
+        const inputPrompt = input
+        setInput("") // clearing after generate/usesuggestion
+        console.log(inputPrompt)
+        const prompt = useSuggestion ? suggestion : inputPrompt
+        const response = await fetch('/api/generateimage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            }
+        )
+        const data = await response.json()
+
+    }
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        await submitPrompt()
+    }
     return (
         <div className='m-10'>
-            <form className='flex flex-col lg:flex-row shadow-md
-            shadow-slate-400/10 border rounded-md lg:divide-x'>
+            <form 
+                className='flex flex-col lg:flex-row shadow-md
+                shadow-slate-400/10 border rounded-md lg:divide-x'
+                onSubmit={handleSubmit}
+            >
                 <textarea 
                     className='flex-1 p-4 outline-none rounded-md'
                     placeholder= {
