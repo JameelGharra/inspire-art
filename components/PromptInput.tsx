@@ -4,6 +4,7 @@ import fetchImages from '@/lib/fetchImages'
 import fetchSuggestion from '@/lib/fetchSuggestionFromChatGPT'
 import React, { FormEvent, useState } from 'react'
 import useSWR from 'swr'
+import toast from 'react-hot-toast'
 
 export default function PromptInput() {
     const [input, setInput] = useState("")
@@ -23,6 +24,13 @@ export default function PromptInput() {
         setInput("") // clearing after generate/usesuggestion
         console.log(inputPrompt)
         const prompt = useSuggestion ? suggestion : inputPrompt
+        // make the notification shorter
+        const notificationPrompt = prompt
+        const notificationPromptShort = notificationPrompt.slice(0, 20)
+        const notification = toast.loading(
+            `DALL-E is creating: ${notificationPromptShort}..`
+        )
+        // sending the request to the endpoint
         const response = await fetch('/api/generateimage', {
                 method: 'POST',
                 headers: {
@@ -32,6 +40,17 @@ export default function PromptInput() {
             }
         )
         const data = await response.json()
+        //checking whether there was an error on the response
+        if(data.error) {
+            toast.error(data.error, {
+                id: notification,
+            })
+        }
+        else {
+            toast.success(`Successfully generated AI image`, {
+                id: notification
+            })
+        }
         // making the user see the newly added image
         updateImages()
     }
