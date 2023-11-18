@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 const fetchSuggestion = () => 
     fetch("/api/suggestion", {
         cache: 'no-store'

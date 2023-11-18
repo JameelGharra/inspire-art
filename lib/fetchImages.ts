@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 const fetchImages = () => 
     fetch("/api/getimages", {
         cache: 'no-store'

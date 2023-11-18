@@ -1,4 +1,5 @@
 "use client"
+export const dynamic = 'force-dynamic';
 
 import fetchImages from '@/lib/fetchImages'
 import fetchSuggestion from '@/lib/fetchSuggestionFromChatGPT'

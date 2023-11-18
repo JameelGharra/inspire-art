@@ -1,3 +1,5 @@
+
+export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
     const response = await fetch("https://openai-image-generator.azurewebsites.net/api/getimages",
     {

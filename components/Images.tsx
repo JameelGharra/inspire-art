@@ -1,5 +1,5 @@
 "use client"
-
+export const dynamic = 'force-dynamic';
 import React from 'react'
 import useSWR from 'swr'
 import fetchImages from "../lib/fetchImages"
