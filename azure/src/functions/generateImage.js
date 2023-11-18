@@ -1,10 +1,12 @@
-const { app } = require("@azure/functions")
-const openai = require("../../lib/openai")
-const axios = require("axios")
-const generateSAS = require("../../lib/generateSASToken")
-import { BlobServiceClient } from "@azure/storage-blob";
+const { app } = require("@azure/functions");
+const openai = require("../../lib/openai");
+const axios = require("axios");
+const generateSASToken = require("../../lib/generateSASToken");
+const { BlobServiceClient } = require("@azure/storage-blob");
 const accountName = process.env.ACCOUNT_STORAGE_NAME;
+
 const containerName = "images";
+
 app.http(
     'generateImage',
     {
@@ -24,7 +26,7 @@ app.http(
             const imageURL = response.data[0].url
             const res = await axios.get(imageURL, { responseType: 'arraybuffer' })
             const arrayBuffer = res.data
-            const generatedToken = await generateSAS()
+            const generatedToken = await generateSASToken()
             const blobServiceClient = new BlobServiceClient(
                 `https://${accountName}.blob.core.windows.net?${generatedToken}`
             )

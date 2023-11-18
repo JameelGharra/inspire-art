@@ -1,8 +1,7 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
+const { app } = require("@azure/functions");
+const openai = require("../../lib/openai");
 
-const openai = require("../../lib/openai")
-
-export async function getChatGPTSuggestion(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+export async function getChatGPTSuggestion(request, context) {
     
     const response = await openai.completions.create({
         model: "text-davinci-003",

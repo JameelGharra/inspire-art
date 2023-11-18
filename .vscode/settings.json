@@ -5,5 +5,7 @@
     "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen",
     "azureFunctions.projectLanguageModel": 4,
-    "azureFunctions.preDeployTask": "npm prune (functions)"
+    "azureFunctions.preDeployTask": "npm prune (functions)",
+    "appService.defaultWebAppToDeploy": "/subscriptions/44c90537-8a13-4a83-ac78-7028d9346de7/resourceGroups/InspireArt/providers/Microsoft.Web/sites/InspireArt",
+    "appService.deploySubpath": "."
 }

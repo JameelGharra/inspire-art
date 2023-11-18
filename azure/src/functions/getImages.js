@@ -1,15 +1,14 @@
-import { 
-    BlobServiceClient, 
-    StorageSharedKeyCredential, 
-} 
-from "@azure/storage-blob"
+const { app } = require("@azure/functions");
+const {
+  BlobServiceClient,
+  StorageSharedKeyCredential,
+} = require("@azure/storage-blob");
+const generateSASToken = require("../../lib/generateSASToken");
 
-import { FunctionResult, HttpRequest, HttpResponse, HttpResponseInit, InvocationContext, app } from "@azure/functions"
+const accountName = process.env.ACCOUNT_STORAGE_NAME;
+const accountKey = process.env.ACCOUNT_STORAGE_KEY;
 
-const generateSASToken = require("../../lib/generateSASToken")
-const accountName = process.env.ACCOUNT_STORAGE_NAME
-const accountKey = process.env.ACCOUNT_STORAGE_KEY
-const containerName = "images"
+const containerName = "images";
 
 const sharedKeyCredential = new StorageSharedKeyCredential(
     accountName,
