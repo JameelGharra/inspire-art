@@ -1,6 +1,6 @@
 export async function GET(request: Request) {
     // connecting to Azure functions endpoint
-    const response = await fetch('http://localhost:7071/api/getChatGPTSuggestion', {
+    const response = await fetch('https://openai-image-generator.azurewebsites.net/api/getchatgptsuggestion', {
         cache: 'no-store'
     })
     const textData = await response.text()

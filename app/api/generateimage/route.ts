@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const req = await request.json()
     const prompt = req.prompt
     const response = await fetch(
-        'http://localhost:7071/api/generateImage',
+        'https://openai-image-generator.azurewebsites.net/api/generateimage',
         {
             method: 'POST',
             headers: {
